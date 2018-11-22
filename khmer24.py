@@ -16,7 +16,7 @@ def url_to_soup(url):
     soup = BeautifulSoup(html, "lxml")
     return soup
 
-
+def write_csv (result) :
     file_name = "./result.csv"
     try:
         file = open(file_name, 'w', encoding='utf-16')
@@ -25,15 +25,3 @@ def url_to_soup(url):
         print(e)
     finally:
         file.close()
-    count += 1;
-
-def write_csv (result) :
-  file_name = "./result.csv"
-    try:
-        file = open(file_name, 'w', encoding='utf-16')
-        file.write(str(result))
-    except Exception as e:
-        print(e)
-    finally:
-        file.close()
-    count += 1;
