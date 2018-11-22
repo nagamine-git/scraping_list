@@ -25,7 +25,12 @@ def write_csv (result) :
     finally:
         file.close()
 
-soup = url_to_soup(url, 0)
-for a in soup.find_all("a", class_="username-tag"):
-    print(a.text)
-    print(a.get('href'))
+res = ""
+
+for i in range(1, 300):
+    soup = url_to_soup(url, i*50)
+
+    for a in soup.find_all("a", class_="username-tag"):
+        res += (a.text + "," +a.get('href') + "\n")
+
+write_csv(res)
