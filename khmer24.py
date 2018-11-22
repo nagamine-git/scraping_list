@@ -1,6 +1,6 @@
 from tqdm import tqdm
 from bs4 import BeautifulSoup
-import urllib.request
+import requests
 import re
 
 # 対象のURL入力
@@ -9,11 +9,10 @@ url = str(input(">>> "))
 result = ''
 
 # urlからsoup(lxml形式のページ内容)を返すメソッド
-def url_to_soup(url):
-    req = urllib.request.Request(url)
-    response = urllib.request.urlopen(req)
-    html = response.read()
-    soup = BeautifulSoup(html, "lxml")
+def url_to_soup(url, page_num):
+    user_agent = {'User-agent': 'Mozilla/5.0'}
+    response = requests.get("https://www.khmer24.com/en/cars-and-vehicles-in-phnom-penh.html?category=cars-and-vehicles&sortby=latestads&per_page="+str(page_num), headers = user_agent)
+    soup = BeautifulSoup(response.text, "lxml")
     return soup
 
 def write_csv (result) :
@@ -25,3 +24,8 @@ def write_csv (result) :
         print(e)
     finally:
         file.close()
+
+soup = url_to_soup(url, 0)
+for a in soup.find_all("a", class_="username-tag"):
+    print(a.text)
+    print(a.get('href'))
